@@ -30,4 +30,9 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
-.cache/ 
+.cache/
+
+# Cursor
+.cursor/cache/
+.cursor/logs/
+.cursor/temp/ 
