@@ -1,0 +1,85 @@
+{
+  "setup": "declarative",
+  "dockerfile": "./docker/creative-background.dockerfile",
+  "install_command": "npm install && npm run setup:creative-env",
+  "start_command": "docker-compose -f docker-compose.creative.yml up -d",
+  "terminals": [
+    {
+      "name": "Creative Watch",
+      "command": "npm run creative:watch",
+      "description": "Monitor creative asset changes and trigger processing"
+    },
+    {
+      "name": "Agent Monitor",
+      "command": "npm run agents:monitor",
+      "description": "Real-time agent coordination and status monitoring"
+    },
+    {
+      "name": "MCP Health Check",
+      "command": "npm run mcp:health-check",
+      "description": "Continuous MCP server health monitoring"
+    },
+    {
+      "name": "Background Tasks",
+      "command": "npm run background:dashboard",
+      "description": "Background creative task progress dashboard"
+    }
+  ],
+  "environment": {
+    "NODE_ENV": "development",
+    "CREATIVE_PROCESSING_MODE": "background",
+    "AGENT_COORDINATION_ENABLED": "true",
+    "MCP_AUTO_RECONNECT": "true",
+    "BACKGROUND_TASK_TIMEOUT": "43200000",
+    "RESOURCE_MONITORING_INTERVAL": "30000",
+    "QUALITY_GATES_ENABLED": "true"
+  },
+  "resources": {
+    "cpu_limit": "4",
+    "memory_limit": "8g",
+    "disk_space": "50g",
+    "gpu_support": false
+  },
+  "services": {
+    "postgresql": {
+      "image": "postgres:16",
+      "environment": {
+        "POSTGRES_DB": "creative_ai_studio",
+        "POSTGRES_USER": "creative_user",
+        "POSTGRES_PASSWORD": "secure_password"
+      }
+    },
+    "qdrant": {
+      "image": "qdrant/qdrant:latest",
+      "ports": ["6333:6333"],
+      "volumes": ["qdrant_creative_data:/qdrant/storage"]
+    },
+    "redis": {
+      "image": "redis:7-alpine",
+      "ports": ["6379:6379"]
+    }
+  },
+  "volumes": [
+    "creative_assets:/app/assets",
+    "generated_code:/app/exports",
+    "agent_state:/app/agent-state",
+    "background_tasks:/app/background-tasks"
+  ],
+  "health_checks": {
+    "mcp_servers": {
+      "interval": "30s",
+      "timeout": "10s",
+      "retries": 3
+    },
+    "agents": {
+      "interval": "60s",
+      "timeout": "15s",
+      "retries": 2
+    },
+    "background_tasks": {
+      "interval": "300s",
+      "timeout": "30s",
+      "retries": 1
+    }
+  }
+}

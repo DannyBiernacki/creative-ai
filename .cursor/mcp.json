@@ -1,0 +1,76 @@
+{
+  "mcpServers": {
+    "taskmaster-ai": {
+      "command": "npx",
+      "args": ["-y", "--package=task-master-ai", "task-master-ai"],
+      "env": {
+        "ANTHROPIC_API_KEY": "",
+        "PERPLEXITY_API_KEY": "",
+        "OPENAI_API_KEY": "",
+        "GOOGLE_API_KEY": "",
+        "MISTRAL_API_KEY": ""
+      },
+      "type": "stdio"
+    },
+
+    "creative-assets": {
+      "command": "node",
+      "args": ["./mcp_servers/creative-assets/dist/index.js"],
+      "env": {
+        "NODE_ENV": "development",
+        "ASSET_STORAGE_PATH": "./assets",
+        "BRAND_ANALYSIS_MODEL": "gpt-4-vision-preview",
+        "COLOR_EXTRACTION_ENGINE": "sharp+color-thief"
+      },
+      "type": "stdio"
+    },
+
+    "code-export": {
+      "command": "node",
+      "args": ["./mcp_servers/code-export/dist/index.js"],
+      "env": {
+        "EXPORT_FRAMEWORKS": "react,vue,angular,svelte",
+        "OUTPUT_PATH": "./exports",
+        "CODE_QUALITY_LEVEL": "production",
+        "ACCESSIBILITY_COMPLIANCE": "wcag-2.1-aa"
+      },
+      "type": "stdio"
+    },
+
+    "figma-sync": {
+      "command": "node",
+      "args": ["./mcp_servers/figma-sync/dist/index.js"],
+      "env": {
+        "FIGMA_ACCESS_TOKEN": "",
+        "SYNC_INTERVAL": "30000",
+        "AUTO_COMPONENT_EXTRACTION": "true",
+        "DESIGN_TOKEN_SYNC": "enabled"
+      },
+      "type": "stdio"
+    },
+
+    "github-deploy": {
+      "command": "node",
+      "args": ["./mcp_servers/github-deploy/dist/index.js"],
+      "env": {
+        "GITHUB_TOKEN": "",
+        "DEFAULT_BRANCH": "main",
+        "AUTO_PR_CREATION": "true",
+        "DEPLOYMENT_STRATEGY": "vercel"
+      },
+      "type": "stdio"
+    },
+
+    "collaboration": {
+      "command": "node",
+      "args": ["./mcp_servers/collaboration/dist/index.js"],
+      "env": {
+        "SLACK_BOT_TOKEN": "",
+        "LINEAR_API_KEY": "",
+        "NOTION_TOKEN": "",
+        "TEAM_NOTIFICATION_LEVEL": "important"
+      },
+      "type": "stdio"
+    }
+  }
+}

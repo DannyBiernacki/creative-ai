@@ -4,27 +4,19 @@
       "name": "code-formatting",
       "description": "Automatyczne formatowanie kodu",
       "enabled": true,
-      "actions": [
-        "format-on-save",
-        "format-on-paste"
-      ]
+      "actions": ["format-on-save", "format-on-paste"]
     },
     {
       "name": "type-checking",
       "description": "Sprawdzanie typów TypeScript",
       "enabled": true,
-      "actions": [
-        "check-types"
-      ]
+      "actions": ["check-types"]
     },
     {
       "name": "security",
       "description": "Sprawdzanie bezpieczeństwa",
       "enabled": true,
-      "actions": [
-        "check-secrets",
-        "check-dependencies"
-      ]
+      "actions": ["check-secrets", "check-dependencies"]
     }
   ]
-} 
+}

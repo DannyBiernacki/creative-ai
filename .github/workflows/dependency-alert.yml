@@ -1,0 +1,27 @@
+name: Dependency Alert
+
+on:
+  push:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 6 * * *' # codziennie o 6:00 UTC
+
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Run dependency alert script
+        run: node scripts/alert-outdated-deps.js | tee dependency-alert.log
+      - name: Upload dependency alert log
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependency-alert-log
+          path: dependency-alert.log

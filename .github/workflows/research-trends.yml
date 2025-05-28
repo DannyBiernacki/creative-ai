@@ -1,0 +1,27 @@
+name: Research Trends
+
+on:
+  push:
+    branches: [main, develop]
+  schedule:
+    - cron: '0 7 * * 1' # co poniedziałek o 7:00 UTC
+
+jobs:
+  fetch-trends:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm install
+      - name: Run Research Agent (trendy)
+        run: node agents/research/src/index.js
+      - name: Upload trends log
+        uses: actions/upload-artifact@v3
+        with:
+          name: research-trends-log
+          path: research/TRENDS_LOG.md
